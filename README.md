@@ -2,38 +2,44 @@
 
 This is a simple dice rolling program without GUI. All info and feedback are outputted through .print() method.
 
+Example outputs:
+```
+d4: 
+     /\
+    /1 \
+   /    \
+  /      \
+ /        \
+/ 4      3 \
+------------
+
+d6: 
+ --------- 
+| o       |
+|         |
+|    o    |
+|         |
+|       o |
+ --------- 
+
+d8: 
+  /\
+ /  \
+/  2 \
+------
+\ 6  /
+ \  /
+  \/
+```
+
 Good for python newcomers, because I am explaining in details how it works and all concepts involved in it.
 
----
+To execute it, just run the `main` file
 
-## First Steps
+--or--
 
-You will not need any IDE or even Python installed. All is available in [Google Colab](https://colab.research.google.com/).
-
-Access this `TODO:` [link](https://) and the program will be runnable.
+Access it on [Google Colab](https://colab.research.google.com/drive/183Cjvn8xcvXw-QM_N4gF84Lu8A2KW6PV#scrollTo=GxRW376N8-cq)
 
 ---
 
-## Code Overview
-
-### main
-
-This class is where it all begins. It creates a `Board` and call its functions.
-
-### Board
-
-This object is responsible for calling the `dice` functions. It also stores the dices.
-
-When created, it will ask `how many dices the user wants`.
-
-Then, it will guide the creation of specific types of dices until there is none left.
-
-Finally, it will roll those dices created.
-
-If the dice is one of the preset types, it's print will be custom.
-
----
-
-
-[re.fullmatch()](https://docs.python.org/3/library/re.html#re.fullmatch)
-
+> P.S.: The D10, D12 and D20 objects aren't printing "ASCII-like" because I just realized there is nothing new to learn by implementing its printing method.
