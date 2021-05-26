@@ -1,16 +1,16 @@
-from dice import Dice
+from dn import DN
 
 
-class D6(Dice):
+class D6(DN):
     def __init__(self):
         super().__init__(6)
 
     def __str__(self):
-        return str(f'd6: {self.value}')
+        return str(f'd6: \n{self.__special_print()}')
 
-    def special_print(self):
+    def __special_print(self):
         all_dots = list('abcdefghijl')
-        dice_number = [1, 2, 3, 4, 5, 6]
+        dice_number = list(range(1, 7))
         dice_dots = ['f', 'bj', 'afl', 'bhdj', 'agfel', 'acegil']
         map_of_dots = dict(zip(dice_number, dice_dots))
 
@@ -31,5 +31,3 @@ class D6(Dice):
             dice_string = dice_string.replace(i, ' ')
 
         return dice_string
-
-

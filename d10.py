@@ -1,18 +1,10 @@
-from dice import Dice
+from dn import DN
 
 
-class D10(Dice):
+class D10(DN):
     def __init__(self):
         super().__init__(10)
 
-
-    def special_print(self):
-        values = [1, 2, 3, 4]
-        values.remove(super().value)
-        return str(f'     /\\\n') + \
-               str(f'    /{super().value} \\\n') + \
-               str(f'   /    \\\n') + \
-               str(f'  /      \\\n') + \
-               str(f' /        \\\n') + \
-               str(f'/ {values.pop()}      {values.pop()} \\\n') + \
-               str(f'------------\n')
+    def __special_print(self):
+        """Not in the mood for some ASCII ART, sry."""
+        pass

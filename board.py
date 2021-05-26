@@ -1,71 +1,83 @@
 import re
 
-from d10 import D10
-from d12 import D12
-from d20 import D20
-from d4 import D4
-from d6 import D6
-from d8 import D8
 from dice import Dice
 
 
 class Board:
-    def __init__(self, max_dices):
-        self._max_dices = max_dices
-        self._current_dices = 0
-        print('Welcome do Dice Simulator')
-        print(f'You have {self._max_dices} available')
+    def __init__(self):
+        self.__dices = []  # DN storage list
+        print('Welcome do DN Simulator.\n'
+              'Creating a new Board.\n'
+              '--------------------------------')
+        self.__max_dices = self.__how_many_dices()
+        self.__dice_stack_creator()  # Create dices
+        self.dice_stack_printer()  # Print created dices
 
-    def __remaining_dices(self):
-        return self._max_dices - self._current_dices
+    def __how_many_dices(self, min_number=1, max_number=9) -> int:
+        """This method will use RegEx to ensure the input will be a number
+        between min_number and max_number"""
+        dice_quantity = int
+        match = None
+        pattern = re.compile(f'[{min_number}-{max_number}]')
 
-    def __update_dices_count(self, dice_quant):
-        self._current_dices += dice_quant
+        while match is None:
+            dice_quantity = input('How many dices do you want? '
+                                  f'[Min:{min_number} - '
+                                  f'Max: {max_number}]') \
+                .replace(' ', '')
+            match = re.fullmatch(pattern, dice_quantity)
 
-    def __set_number_of_dices(self):
-        # using RegEx to validade numbers
-        pattern = re.compile(f'[0-{self.__remaining_dices()}]')
-        while True:
-            dices = input(f'How many dices you want to roll? (MAX: {self.__remaining_dices()})\n')
-            match = pattern.fullmatch(dices)
+        return int(dice_quantity)
 
-            if not match:
-                print('Not a valid number of dices imput')
-            else:
-                break
-        return int(dices)
+    def print_available_dices(self):
+        """Print how many dices are available for creation"""
+        if self.__remaining_dices() == 1:
+            print(f'You have {self.__remaining_dices()} dice available')
+        else:
+            print(f'You have {self.__remaining_dices()} dices available')
 
-    def __dice_creator(self, dice_type):
-        if dice_type == 4:
-            return D4()
-        if dice_type == 6:
-            return D6()
-        if dice_type == 8:
-            return D8()
-        if dice_type == 10:
-            return D10()
-        if dice_type == 12:
-            return D12()
-        if dice_type == 20:
-            return D20()
-        return Dice(dice_type)
+    def __remaining_dices(self) -> int:
+        """Return the number of available dices for creation"""
+        return self.__max_dices - len(self.__dices)
 
-    def dice_stack_creator(self):
-        dices = []
+    def __dice_stack_creator(self):
+        """Create the Dices"""
+        print('--------------------------------\n'
+              'Creating Dices.\n'
+              '1) Choose how many dices will be created;\n'
+              '2) Choose how many sides those above will have.\n'
+              '3) Repeat until there is no more dices left.\n'
+              '--------------------------------')
         while self.__remaining_dices() > 0:
-            dice_type = int(self.__set_dice_type())
-            dice_quant = int(self.__set_number_of_dices())
-            for index in range(dice_quant):
-                dice = self.__dice_creator(dice_type)
-                dices.append(dice)
-            self.__update_dices_count(dice_quant)
-        return dices
+            self.print_available_dices()
 
-    def __set_dice_type(self):
-        while True:
-            size = input(f'Choose a dice size:\n d[4] d[6] d[8] d[10] d[12] d[20]\n')
-            if size == 4 or 6 or 8 or 10 or 12 or 20:
-                break
-            else:
-                print('Not a valid input')
-        return size
+            dice_quantity = int(self.__how_many_dices
+                                (1, self.__remaining_dices()))
+            dice_sides = int(self.__how_many_dice_sides())
+
+            for index in range(dice_quantity):
+                dice = Dice.creator(dice_sides)
+                self.__dices.append(dice)
+
+    def dice_stack_printer(self):
+        """Print the Dices"""
+        print('--------------------------------\n'
+              'Printing Dices.\n'
+              '--------------------------------')
+
+        for dice in self.__dices:
+            print(dice)
+
+    def __how_many_dice_sides(self):
+        """Using RegEx to ensure it will be a number between 3 and 20, as
+        4 is the minimum number of planes for the same sided Pyramid
+        20 is just an arbitrary maximum number"""
+
+        pattern = re.compile('([4-9])|(1[0-9])|20')
+        match = None
+        while match is None:
+            sides = input('How many sides your dice will have? '
+                          '[Min:4 - Max: 20]').replace(' ', '')
+            match = re.fullmatch(pattern, sides)
+
+        return sides
