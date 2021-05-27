@@ -38,7 +38,7 @@ To execute it, just run the `main` file
 
 --or--
 
-Access it on [Google Colab](https://colab.research.google.com/drive/183Cjvn8xcvXw-QM_N4gF84Lu8A2KW6PV?usp=sharing)
+Access its [ipynb file](https://github.com/Asleik/dice-roller/blob/main/dice_roller.ipynb) and click on "Open in Colab" button.
 
 ---
 
